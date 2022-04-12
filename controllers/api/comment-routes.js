@@ -28,7 +28,13 @@ router.put("/:id", async (req, res) => {
     try {
         const updateComment = await Comment.update({
             text: req.body.text,
-        });
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+        );
         if (updateComment) {
             res.status(200).json(updateComment);
         } else {
@@ -51,7 +57,7 @@ router.delete("/:id", async (req, res) => {
         if (!destroyComment) {
             res.status(400).json({ message: "That comment was not found" });
         } else {
-            res.json(destroyComment);
+            res.json("Success");
         };
     }
     catch (err) {

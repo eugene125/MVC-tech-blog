@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { Blog, Comment, User } = require("../../models");
 const sequelize = require("../../config/connection");
+const e = require('express');
 
 // Get all blog posts
 router.get("/", async (req, res) => {
@@ -58,9 +59,13 @@ router.post("/", async (req, res) => {
         const createBlog = await Category.create({
             title: req.body.title,
             text: req.body.text,
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         });
-        res.json(createBlog);
+        if(createBlog){
+            res.json("Success");
+        } else {
+            res.status(400).json({ message: "Unable to create blog"})
+        }
     }
     catch (err) {
         res.status(500).json(err);

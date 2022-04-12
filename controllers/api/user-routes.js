@@ -81,7 +81,13 @@ router.put("/:id", async (req, res) => {
             email: req.body.email,
             // figure out how to make the hash the password
             password: req.body.password
-        });
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+        );
         // createUser.password = await bcrypt.hash(req.body.password, 10);
         if (updateUser) {
             res.json(updateUser);
@@ -95,22 +101,22 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a user
-router.delete("/:id", async (req, res) => {
-    try {
-        const destroyUser = await User.destroy({
-            where: {
-                id: req.params.id
+router.delete("/:id", (req, res) => {
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(destroyUser => {
+            if (!destroyUser) {
+                res.status(400).json({ message: "That user was not found" });
+                return;
             }
-        });
-        if (!destroyUser) {
-            res.status(400).json({ message: "That user was not found" });
-        } else {
             res.json(destroyUser);
-        };
-    }
-    catch (err) {
-        res.status(500).json(err);
-    };
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        });
 });
 
 
