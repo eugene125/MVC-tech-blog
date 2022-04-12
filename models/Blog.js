@@ -18,7 +18,7 @@ Blog.init(
             // add validation?
         },
         text: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
             // add validation?
         },

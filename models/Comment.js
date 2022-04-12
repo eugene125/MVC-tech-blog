@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection.js');
 
 class Comment extends Model { }
@@ -13,7 +12,7 @@ Comment.init(
             autoIncrement: true
         },
         text: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
             // add validation?
         },
@@ -26,6 +25,7 @@ Comment.init(
         },
         blog_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: "blog",
                 key: "id"

@@ -3,7 +3,6 @@ const User = require("./User");
 const Blog = require("./Blog");
 const Comment = require("./Comment");
 
-
 // Comment belongsTo User
 Comment.belongsTo(User, {
     foreignKey: "user_id"
