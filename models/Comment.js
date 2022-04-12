@@ -9,7 +9,7 @@ Comment.init(
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: false,
+            primaryKey: true,
             autoIncrement: true
         },
         text: {
@@ -24,10 +24,10 @@ Comment.init(
                 key: "id"
             }
         },
-        comment_id: {
+        blog_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: "comment",
+                model: "blog",
                 key: "id"
             }
         }
