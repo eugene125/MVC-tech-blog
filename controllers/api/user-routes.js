@@ -61,10 +61,8 @@ router.post("/", async (req, res) => {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
-            // figure out how to make the hash the password
             password: req.body.password
         });
-        // createUser.password = await bcrypt.hash(req.body.password, 10);
         res.status(200).json(createUser);
     }
     catch (err) {

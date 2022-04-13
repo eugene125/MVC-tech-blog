@@ -2,6 +2,14 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection.js');
 const bcrypt = require('bcrypt');
 
+const hashPassword = async (user, options) => {
+    if (user.password) {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        user.password = hashedPassword;
+    }
+    return user;
+};
+
 class User extends Model { }
 
 User.init(
@@ -38,5 +46,9 @@ User.init(
         modelName: 'user',
     }
 );
+
+User.addHook("beforeCreate", hashPassword);
+User.addHook("beforeUpdate", hashPassword);
+User.addHook("beforeBulkCreate", async (users) => Promise.all(users.map(i => hashPassword(i))));
 
 module.exports = User;
