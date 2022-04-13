@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
-const e = require('express');
-const { User, Blog, Comment } = require("../../models");
+const { User, Post, Comment } = require("../../models");
 
 // Get all users
 router.get("/", async (req, res) => {
@@ -44,16 +43,6 @@ router.get("/:id", async (req, res) => {
     };
 });
 
-// // Login
-// router.post("/login", async (req, res) => {
-
-// });
-
-// // Logout
-// router.post("/logout", async (req, res) => {
-
-// });
-
 // Create a new user
 router.post("/", async (req, res) => {
     try {
@@ -70,6 +59,54 @@ router.post("/", async (req, res) => {
     };
 });
 
+// Login
+router.post("/login", async (req, res) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                email: req.body.email,
+            }
+        });
+        if (!user) {
+            res.status(400).json({ message: "Incorrect email or password, please try again" });
+            return;
+        };
+        const validPassword = user.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: "Incorrect email or password, please try again" });
+            return;
+        }
+        req.session.save(() => {
+            req.session.user_id = user.id,
+                req.session.user_id = user.id,
+                req.session.loggedIn = true;
+
+            res.json({ user: user, message: "You have logged in" });
+
+        });
+    }
+    catch (err) {
+        res.status(500).json(err);
+    };
+});
+
+// Logout
+router.post("/logout", async (req, res) => {
+    try {
+        if (req.session.logged_in) {
+            req.session.destroy(() => {
+                res.status(204).end();
+            });
+        } else {
+            res.status(404).end();
+        }
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 // Update an existing user
 router.put("/:id", async (req, res) => {
     try {
@@ -77,16 +114,14 @@ router.put("/:id", async (req, res) => {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
-            // figure out how to make the hash the password
             password: req.body.password
         },
-        {
-            where: {
-                id: req.params.id
+            {
+                where: {
+                    id: req.params.id
+                }
             }
-        }
         );
-        // createUser.password = await bcrypt.hash(req.body.password, 10);
         if (updateUser) {
             res.json(updateUser);
         } else {

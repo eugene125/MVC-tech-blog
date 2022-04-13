@@ -1,6 +1,6 @@
-const { Blog } = require("../models");
+const { Post } = require("../models");
 
-const blogData = [
+const postData = [
     {
         title: "Dry Martini",
         text: `Whose leg do you have to hump to get a dry martini around here?`,
@@ -35,6 +35,6 @@ const blogData = [
     }
 ];
 
-const seedBlogs = () => Blog.bulkCreate(blogData);
+const seedPosts = () => Post.bulkCreate(postData);
 
-module.exports = seedBlogs;
+module.exports = seedPosts;

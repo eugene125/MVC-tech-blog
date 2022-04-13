@@ -1,25 +1,24 @@
 const router = require('express').Router();
 
-const { Blog, Comment, User } = require("../../models");
+const { Post, Comment, User } = require("../../models");
 const sequelize = require("../../config/connection");
-const e = require('express');
 
-// Get all blog posts
+// Get all posts
 router.get("/", async (req, res) => {
     try {
-        const allBlogs = await Blog.findAll({
+        const allPosts = await Post.findAll({
             // Including associated comments
             include: [
                 {
                     model: Comment,
-                    attributes: ["id", "text", "user_id", "blog_id"]
+                    attributes: ["id", "text", "user_id", "post_id"]
                 }
             ]
         });
-        if (allBlogs) {
-            res.status(200).json(allBlogs);
+        if (allPosts) {
+            res.status(200).json(allPosts);
         } else {
-            res.status(400).json({ message: "Blogs cannot be found" });
+            res.status(400).json({ message: "Posts cannot be found" });
         };
     }
     catch (err) {
@@ -27,10 +26,10 @@ router.get("/", async (req, res) => {
     };
 });
 
-// Get a single blog post
+// Get a single post
 router.get("/:id", async (req, res) => {
     try {
-        const singleBlog = await Blog.findOne({
+        const singlePost = await Post.findOne({
             where: {
                 id: req.params.id
             },
@@ -38,14 +37,14 @@ router.get("/:id", async (req, res) => {
             include: [
                 {
                     model: Comment,
-                    attributes: ["id", "text", "user_id", "blog_id"]
+                    attributes: ["id", "text", "user_id", "post_id"]
                 }
             ]
         });
-        if (singleBlog) {
-            res.status(200).json(singleBlog);
+        if (singlePost) {
+            res.status(200).json(singlePost);
         } else {
-            res.status(400).json({ message: "That blog was not found" });
+            res.status(400).json({ message: "That post was not found" });
         };
     }
     catch (err) {
@@ -53,19 +52,19 @@ router.get("/:id", async (req, res) => {
     };
 });
 
-// Create a new blog post
+// Create a new post
 router.post("/", async (req, res) => {
     try {
-        const createBlog = await Blog.create({
+        const createPost = await Post.create({
             title: req.body.title,
             text: req.body.text,
             // ToDo: Change to session
             user_id: req.body.user_id
         });
-        if(createBlog){
+        if(createPost){
             res.json("Success");
         } else {
-            res.status(400).json({ message: "Unable to create blog"})
+            res.status(400).json({ message: "Unable to create post"})
         }
     }
     catch (err) {
@@ -73,10 +72,10 @@ router.post("/", async (req, res) => {
     };
 });
 
-// Update an existing blog post
+// Update an existing post
 router.put("/:id", async (req, res) => {
     try {
-        const updateBlog = await Blog.update(
+        const updatePost = await Post.update(
             {
                 title: req.body.title,
                 text: req.body.text,
@@ -87,10 +86,10 @@ router.put("/:id", async (req, res) => {
                 }
             }
         );
-        if (updateBlog) {
-            res.json(updateBlog);
+        if (updatePost) {
+            res.json(updatePost);
         } else {
-            res.status(400).json({ message: "That blog was not found" })
+            res.status(400).json({ message: "That post was not found" })
         };
     }
     catch (err) {
@@ -98,18 +97,18 @@ router.put("/:id", async (req, res) => {
     };
 });
 
-// Delete an existing blog post
+// Delete an existing post
 router.delete("/:id", async (req, res) => {
     try {
-        const destroyBlog = await Blog.destroy({
+        const destroyPost = await Post.destroy({
             where: {
                 id: req.params.id
             }
         })
-        if (!destroyBlog) {
-            res.status(400).json({ message: "That blog was not found" });
+        if (!destroyPost) {
+            res.status(400).json({ message: "That post was not found" });
         } else {
-            res.json(destroyBlog);
+            res.json(destroyPost);
         };
     }
     catch (err) {

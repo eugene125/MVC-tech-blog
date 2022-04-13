@@ -10,7 +10,11 @@ const hashPassword = async (user, options) => {
     return user;
 };
 
-class User extends Model { }
+class User extends Model {
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password)
+    }
+}
 
 User.init(
     {
