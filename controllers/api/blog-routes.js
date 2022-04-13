@@ -56,10 +56,11 @@ router.get("/:id", async (req, res) => {
 // Create a new blog post
 router.post("/", async (req, res) => {
     try {
-        const createBlog = await Category.create({
+        const createBlog = await Blog.create({
             title: req.body.title,
             text: req.body.text,
-            user_id: req.session.user_id
+            // ToDo: Change to session
+            user_id: req.body.user_id
         });
         if(createBlog){
             res.json("Success");

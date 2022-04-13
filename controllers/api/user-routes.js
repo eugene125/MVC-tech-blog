@@ -44,15 +44,15 @@ router.get("/:id", async (req, res) => {
     };
 });
 
-// Login
-router.post("/", async (req, res) => {
+// // Login
+// router.post("/login", async (req, res) => {
 
-});
+// });
 
-// Logout
-router.post("/", async (req, res) => {
+// // Logout
+// router.post("/logout", async (req, res) => {
 
-});
+// });
 
 // Create a new user
 router.post("/", async (req, res) => {
