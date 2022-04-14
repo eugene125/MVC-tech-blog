@@ -47,8 +47,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const createUser = await User.create({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password
         });
@@ -111,8 +110,7 @@ router.post("/logout", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const updateUser = await User.update({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password
         },

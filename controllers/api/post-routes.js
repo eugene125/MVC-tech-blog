@@ -2,9 +2,10 @@ const router = require('express').Router();
 
 const { Post, Comment, User } = require("../../models");
 const sequelize = require("../../config/connection");
+const withAuthorization = require('../../utils/auth');
 
 // Get all posts
-router.get("/", async (req, res) => {
+router.get("/", withAuthorization, async (req, res) => {
     try {
         const allPosts = await Post.findAll({
             // Including associated comments
@@ -27,7 +28,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single post
-router.get("/:id", async (req, res) => {
+router.get("/:id", withAuthorization, async (req, res) => {
     try {
         const singlePost = await Post.findOne({
             where: {
@@ -53,13 +54,12 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new post
-router.post("/", async (req, res) => {
+router.post("/", withAuthorization, async (req, res) => {
     try {
         const createPost = await Post.create({
             title: req.body.title,
             text: req.body.text,
-            // ToDo: Change to session
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         });
         if(createPost){
             res.json("Success");
@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update an existing post
-router.put("/:id", async (req, res) => {
+router.put("/:id", withAuthorization, async (req, res) => {
     try {
         const updatePost = await Post.update(
             {
@@ -98,7 +98,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete an existing post
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", withAuthorization, async (req, res) => {
     try {
         const destroyPost = await Post.destroy({
             where: {

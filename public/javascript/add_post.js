@@ -2,13 +2,13 @@ async function addPost(event) {
     event.preventDefault();
 
     const title = document.querySelector("input[name='title']").value;
-    const postText = document.querySelector("input[name='post-text']").value;
+    const text = document.querySelector("input[name='post-text']").value;
 
     const response = await fetch("api/posts", {
         method: "POST",
         body: JSON.stringify({
             title,
-            postText
+            text
         }),
         headers: {
             "Content-Type": "application/json"
@@ -20,4 +20,4 @@ async function addPost(event) {
     }
 };
 
-document.querySelector("#add-post").addEventListener("submit", addPost)
+document.querySelector("#add-post").addEventListener("submit", addPost);

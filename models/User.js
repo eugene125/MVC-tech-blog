@@ -24,13 +24,10 @@ User.init(
             primaryKey: true,
             autoIncrement: true
         },
-        first_name: {
+        username: {
             type: DataTypes.STRING,
-            allowNull: false
-        },
-        last_name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,
