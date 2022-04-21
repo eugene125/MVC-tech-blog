@@ -4,32 +4,16 @@
 
 - [Description](#description)
 - [Installation](#installation)
-- [Media](#media)
 - [GitHub Repository](#github-repository)
 - [Contributors](#contributors)
 
 ## Description
 
-<!-- My E-Commerce-Back-End program manages a comapies database. The program allows a user to get information, post information, put (update) information, and delete information from the database. -->
+The MVC tech blog was intended to connect the front end and back end, allowing a user to create a blog post and comment on other people's blog posts. However, with the difficulties of using handlebars, I was unable to get the website working as planned.
 
 ## Installation
 
-<!-- - Clone the repository to your local machine
-- Install local dependencies
-    * Install npm: "npm install" 
-- If manual installation is needed:
-    * express: "npm install express"
-    * dotenv: "npm install dotenv"
-    * sequelize: "npm install sequelize"
-    * MySql2: "npm install mysql2"
-- Open SQL workbench and type in "CREATE DATABASE ecommerce_db"
-- Right click on 'package.json' and select open integrated terminal
-- Enter "npm run seed" to seed the database
-- Enter "npm start" to start up the server -->
-
-## Media
-
-![Screenshot]()
+Open a terminal and type in npm install. Doing so will install the node packages I used on this homework assignment.
 
 ## GitHub Repository
 
