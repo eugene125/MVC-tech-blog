@@ -5,7 +5,7 @@ const sequelize = require("../../config/connection");
 const withAuthorization = require('../../utils/auth');
 
 // Get all posts
-router.get("/", withAuthorization, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const allPosts = await Post.findAll({
             // Including associated comments
@@ -28,7 +28,7 @@ router.get("/", withAuthorization, async (req, res) => {
 });
 
 // Get a single post
-router.get("/:id", withAuthorization, async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const singlePost = await Post.findOne({
             where: {

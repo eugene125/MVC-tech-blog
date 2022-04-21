@@ -5,7 +5,7 @@ const withAuthorization = require('../../utils/auth');
 
 
 // Get all comments
-router.get("/", withAuthorization, async (req, res) => {
+router.get("/", async (req, res) => {
     const allComments = await Comment.findAll({});
     res.json(allComments);
 });

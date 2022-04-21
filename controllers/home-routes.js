@@ -1,7 +1,6 @@
 const { Post, User, Comment } = require('../models');
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const withAuthorization = require('../utils/auth');
 
 router.get('/', async (req, res) => {
     try {    
@@ -10,14 +9,13 @@ router.get('/', async (req, res) => {
       });
 
       const posts = postData.map((post) => post.get({ plain: true }));
-  
-      res.render('all-posts-admin', { posts, loggedIn: req.session.loggedIn});
+      res.render('landing_page', { layout: "index", posts: posts});
     } catch (err) {
       res.status(500).json(err);
     }
   }); 
 
-  router.get('/post/:id', withAuthorization, async (req, res) => {
+  router.get('/post/:id', async (req, res) => {
     try {     
       const postData = await Post.findOne({
      
@@ -50,7 +48,7 @@ router.get('/', async (req, res) => {
       res.redirect('/dashboard');
       return;
     }
-    res.render('login');
+    res.render('login', {layout: "index"});
   });
   
   router.get('/signup', (req, res) => {
@@ -58,8 +56,7 @@ router.get('/', async (req, res) => {
       res.redirect('/dashboard');
       return;
     }
-  
-    res.render('signup');
+    res.render('sign_up', {layout: "index"});
   });
   
   module.exports = router;
